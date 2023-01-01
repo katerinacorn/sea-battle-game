@@ -97,6 +97,7 @@ export class PrepScene extends Scene {
         const {
             player
         } = this.game;
+        //!problems
         player.randomize(ShipView);
 
         for (let index = 0; index < 10; index += 1) {

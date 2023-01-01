@@ -3,6 +3,10 @@ import {
     getRandomInteger
 } from "./utils.js";
 
+import {
+    Ship
+} from "./Ship.js";
+
 export class Battlefield {
     ships = [];
     shots = [];
@@ -161,8 +165,9 @@ export class Battlefield {
 
     randomize(shipClass = Ship) {
         this.removeAllShips();
+
         for (let size = 4; size >= 1; size -= 1) {
-            for (let number = 0; number < 5; number += 1) {
+            for (let number = 0; number < 5 - size; number += 1) {
                 const direction = getRandomFrom("row", "column");
                 const ship = new shipClass(size, direction);
 
