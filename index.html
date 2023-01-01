@@ -10,13 +10,53 @@
 </head>
 
 <body>
-    <h1 class="text-3xl font-bold underline">
-        Hello world!
-    </h1>
+    <div class="app"> <!-- container mx-auto flex px-5 -->
+        <div class="app-header">
+        </div>
+        <div class="app-body">
+            <div class="player" data-side="player"></div>
+            <div class="app-menu">
+                <div class="app-actions" data-scene="preparation">
+                    <button class="app-action" data-computer="simple" disabled>
+                        Лёгкий уровень
+                    </button>
+                    <button class="app-action " data-computer="middle" disabled>
+                        Средний уровень
+                    </button>
+                    <button class="app-action " data-computer="hard" disabled>
+                        Сложный уровень
+                    </button>
+
+                    <div class="">
+                        <h3>Сетевая игра</h3>
+                        <button class="app-action " data-type="random" disabled>
+                            Играть против случайного игрока
+                        </button>
+                        <button class="app-action " data-type="challenge" disabled>
+                            Вызвать на бой
+                        </button>
+                    </div>
+
+                    <button class="app-action " data-action="manually">
+                        Расставить корабли вручную
+                    </button>
+                    <button class="app-action " data-action="randomize">
+                        Расставить корабли случайно
+                    </button>
+                </div>
+
+                <div class="app-actions hidden" data-scene="computer">
+                    <div class="battlefield-status">Ваш ход</div>
+                    <button class="app-action" data-action="randomize">Сдаться</button>
+                </div>
+            </div>
+            <div class="opponent" data-side="opponent"></div>
+        </div>
+    </div>
 
 
-    <script src="./src/js/index.js"></script>
 
+    <script src="./src/js/index.js" type="module"></script>
 </body>
 
 </html>
