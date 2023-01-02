@@ -77,33 +77,36 @@ export class PrepScene extends Scene {
     init() {
         console.log('init: ');
 
-        //create ships
-        const {
-            player
-        } = this.game;
-
-        for (const {
-                size,
-                direction,
-                startX,
-                startY
-            } of shipsDatabase) {
-            const ship = new ShipView(size, direction, startX, startY);
-            player.addShip(ship);
-        }
+        this.manually();
     }
 
     start() {
         const {
-            player
+            player,
+            opponent
         } = this.game;
-        //!problems
-        player.randomize(ShipView);
 
-        for (let index = 0; index < 10; index += 1) {
-            player.ships[index].startX = shipsDatabase[index].startX;
-            player.ships[index].startY = shipsDatabase[index].startY;
-        }
+        opponent.clear();
+        player.removeAllShots();
+        player.ships.forEach(ship => (ship.killed = false));
+
+        document.querySelectorAll(".app-actions").forEach((element) => element.classList.add("hidden"));
+        document.querySelector('[data-scene="preparation"]').classList.remove("hidden");
+
+        const manuallyShipsButton = document.querySelector(".manually");
+        manuallyShipsButton.addEventListener("click", (event) => {
+            this.manually();
+        });
+
+        const randomizeShipsButton = document.querySelector(".randomize");
+        randomizeShipsButton.addEventListener("click", (event) => {
+            this.randomize();
+        });
+
+        const playWithBotButton = document.querySelector(".bot");
+        playWithBotButton.addEventListener("click", (event) => {
+            this.startBot();
+        });
     }
 
     update() {
@@ -175,6 +178,51 @@ export class PrepScene extends Scene {
 
     stop() {
         console.log('stop: ');
+        /* manuallyShipsButton.removeEventListener("click", (event) => {
+            this.manually();
+        }); */
 
+        /* randomizeShipsButton.removeEventListener("click", (event) => {
+            this.randomize();
+        }) */
+
+        /* playWithBotButton.removeEventListener("click", (event) => {
+            this.startBot();
+        }); */
+    }
+
+    randomize() {
+        const {
+            player
+        } = this.game;
+
+        player.randomize(ShipView);
+
+        for (let index = 0; index < 10; index += 1) {
+            player.ships[index].startX = shipsDatabase[index].startX;
+            player.ships[index].startY = shipsDatabase[index].startY;
+        }
+    }
+
+    manually() {
+        //create ships
+        const {
+            player
+        } = this.game;
+        player.removeAllShips();
+        for (const {
+                size,
+                direction,
+                startX,
+                startY
+            } of shipsDatabase) {
+            const ship = new ShipView(size, direction, startX, startY);
+            player.addShip(ship);
+        }
+    }
+
+    startBot() {
+        console.log("bot started");
+        this.game.start("bot");
     }
 }

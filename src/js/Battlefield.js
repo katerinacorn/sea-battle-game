@@ -29,6 +29,8 @@ export class Battlefield {
                     y,
                     ship: null,
                     empty: true,
+                    shotted: false,
+                    wounded: false,
                 };
 
                 row.push(cell);
@@ -64,10 +66,47 @@ export class Battlefield {
                     }
                 }
             }
+
+        }
+        for (const {
+                x,
+                y
+            } of this.shots) {
+            const cell = matrix[y][x];
+            cell.shotted = true;
+
+            if (cell.ship) {
+                cell.wounded = true;
+            }
+
         }
         this.#matrix = matrix;
         this.#changed = false;
         return this.#matrix;
+    }
+
+    get readyForBattle() {
+        if (this.ships.length !== 10) {
+            return false;
+        }
+
+        for (const ship of this.ships) {
+            if (!ship.isPlaced) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    get loser() {
+        for (const ship of this.ships) {
+            if (!ship.killed) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     //+ needs refactoring
@@ -144,12 +183,71 @@ export class Battlefield {
         return ships.length;
     }
 
-    addShot() {
+    addShot(newShot) {
+        for (const shot of this.shots) {
+            if (shot.x === newShot.x && shot.y === newShot.y) {
+                return false;
+            }
 
+        }
+        this.shots.push(newShot);
+        this.#changed = true;
+
+        const matrix = this.matrix;
+        const {
+            x,
+            y
+        } = newShot;
+        if (matrix[y][x].ship) {
+            newShot.setState("hit");
+            const {
+                ship
+            } = matrix[y][x];
+            const directionX = ship.direction === "row";
+            const directionY = ship.direction === "column";
+            let killed = true;
+
+            for (let index = 0; index < ship.size; index += 1) {
+                const curvedX = ship.x + directionX * index;
+                const curvedY = ship.y + directionY * index;
+                const item = matrix[curvedY][curvedX];
+
+                //if ship damaged
+                if (!item.wounded) {
+                    killed = false;
+                    break;
+                }
+            }
+
+            if (killed) {
+                ship.killed = true;
+
+                for (let index = 0; index < ship.size; index += 1) {
+                    const curvedX = ship.x + directionX * index;
+                    const curvedY = ship.y + directionY * index;
+
+                    const shot = this.shots.find(
+                        (shot) => shot.x === curvedX && shot.y === curvedY
+                    );
+                    shot.setState("kill");
+                }
+            }
+
+        }
+        this.#changed = true;
+        return true;
     }
 
-    removeShot() {
+    removeShot(shot) {
+        if (!this.shots.includes(shot)) {
+            return false;
+        }
 
+        const index = this.shots.indexOf(shot);
+        this.shots.splice(index, 1);
+
+        this.#changed = true;
+        return true;
     }
 
     removeAllShots() {
@@ -181,5 +279,10 @@ export class Battlefield {
             }
 
         }
+    }
+
+    clear() {
+        this.removeAllShots();
+        this.removeAllShips();
     }
 }

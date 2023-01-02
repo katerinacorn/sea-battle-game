@@ -15,8 +15,8 @@ export class Game {
 
     constructor(scenes = {}) {
         const mouse = new Mouse(document.body);
-        const player = new BattlefieldView();
-        const opponent = new BattlefieldView();
+        const player = new BattlefieldView(true);
+        const opponent = new BattlefieldView(false);
 
         Object.assign(this, {
             mouse,

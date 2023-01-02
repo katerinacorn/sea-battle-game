@@ -63,6 +63,10 @@ body {
   border: 1px solid rgba(6, 25, 247, 0.15);
 }
 
+.battlefield__cell-target {
+  background-color: crimson;
+}
+
 /**/
 
 .marker {
@@ -167,16 +171,16 @@ body {
   justify-content: center;
 }
 
-.shot-missed {
+.shot-miss {
   color: gray;
 }
 
-.shot-wounded {
+.shot-hit {
   background: #fbdede;
   z-index: 1;
 }
 
-.shot-wounded::after {
+.shot-hit::after {
   content: " ";
   width: calc(32px * 1.3);
   height: calc(32px * 1.3);
@@ -188,7 +192,7 @@ body {
   left: -20px;
 }
 
-.shot-wounded::before {
+.shot-hit::before {
   content: " ";
   width: calc(32px * 1.3);
   height: calc(32px * 1.3);
@@ -200,7 +204,7 @@ body {
   left: 9px;
 }
 
-.shot-killed {
+.shot-kill {
   margin: -2px;
   border: 2px solid red;
 }

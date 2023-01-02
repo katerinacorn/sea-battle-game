@@ -17,17 +17,17 @@
             <div class="player" data-side="player"></div>
             <div class="app-menu">
                 <div class="app-actions" data-scene="preparation">
-                    <button class="app-action" data-computer="simple" disabled>
-                        Лёгкий уровень
+                    <button class="app-action bot">
+                        Play with bot
                     </button>
-                    <button class="app-action " data-computer="middle" disabled>
+                    <!-- <button class="app-action " data-computer="middle" disabled>
                         Средний уровень
                     </button>
                     <button class="app-action " data-computer="hard" disabled>
                         Сложный уровень
-                    </button>
+                    </button> -->
 
-                    <div class="">
+                    <!-- <div class="">
                         <h3>Сетевая игра</h3>
                         <button class="app-action " data-type="random" disabled>
                             Играть против случайного игрока
@@ -35,19 +35,20 @@
                         <button class="app-action " data-type="challenge" disabled>
                             Вызвать на бой
                         </button>
-                    </div>
+                    </div> -->
 
-                    <button class="app-action " data-action="manually">
-                        Расставить корабли вручную
+                    <button class="app-action manually" data-action="manually">
+                        Manually ships
                     </button>
-                    <button class="app-action " data-action="randomize">
-                        Расставить корабли случайно
+                    <button class="app-action randomize" data-action="randomize">
+                        Randomize ships
                     </button>
                 </div>
 
                 <div class="app-actions hidden" data-scene="computer">
-                    <div class="battlefield-status">Ваш ход</div>
-                    <button class="app-action" data-action="randomize">Сдаться</button>
+                    <div class="battlefield-status">Your turn</div>
+                    <button class="app-action giveup">Give up</button>
+                    <button class="app-action retry">Retry</button>
                 </div>
             </div>
             <div class="opponent" data-side="opponent"></div>

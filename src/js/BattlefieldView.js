@@ -10,10 +10,11 @@ export class BattlefieldView extends Battlefield {
     field = null;
     dok = null;
     polygon = null; //shots
+    shipsVisibility = true;
 
     cells = [];
 
-    constructor() {
+    constructor(shipsVisibility = true) {
         super();
         const root = document.createElement("div");
         root.classList.add("battlefield");
@@ -31,7 +32,8 @@ export class BattlefieldView extends Battlefield {
             root,
             field,
             dok,
-            polygon
+            polygon,
+            shipsVisibility
         });
         root.append(field, dok, polygon);
 
@@ -84,20 +86,25 @@ export class BattlefieldView extends Battlefield {
         if (!super.addShip(ship, x, y)) {
             return false;
         }
-        this.dok.append(ship.div);
 
-        if (ship.isPlaced) {
-            const cell = this.cells[y][x];
-            const cellRectangle = cell.getBoundingClientRect();
-            const rootRectangle = this.root.getBoundingClientRect();
+        if (this.shipsVisibility) {
+            this.dok.append(ship.div);
 
-            ship.div.style.left = `${cellRectangle.left - rootRectangle.left}px`;
-            ship.div.style.top = `${cellRectangle.top - rootRectangle.top}px`;
-        } else {
-            ship.setDirection("row");
-            ship.div.style.left = `${ship.startX}px`;
-            ship.div.style.top = `${ship.startY}px`;
+            if (ship.isPlaced) {
+                const cell = this.cells[y][x];
+                const cellRectangle = cell.getBoundingClientRect();
+                const rootRectangle = this.root.getBoundingClientRect();
+
+                ship.div.style.left = `${cellRectangle.left - rootRectangle.left}px`;
+                ship.div.style.top = `${cellRectangle.top - rootRectangle.top}px`;
+            } else {
+                ship.setDirection("row");
+                ship.div.style.left = `${ship.startX}px`;
+                ship.div.style.top = `${ship.startY}px`;
+            }
+
         }
+
         return true;
     }
     removeShip(ship) {
@@ -113,5 +120,35 @@ export class BattlefieldView extends Battlefield {
 
     isUnder(point) {
         return isPointOverElement(point, this.root);
+    }
+
+    addShot(shot) {
+        if (!super.addShot(shot)) {
+            return false;
+        }
+
+        this.polygon.append(shot.div);
+
+        //shot position
+        const cell = this.cells[shot.y][shot.x];
+        const cellRectangle = cell.getBoundingClientRect();
+        const rootRectangle = this.root.getBoundingClientRect();
+
+        shot.div.style.left = `${cellRectangle.left - rootRectangle.left}px`;
+        shot.div.style.top = `${cellRectangle.top - rootRectangle.top}px`;
+
+        return true;
+    }
+
+    removeShot(shot) {
+        if (!super.removeShot(shot)) {
+            return false;
+        }
+
+        if ([...this.polygon.children].includes(shot.div)) {
+            shot.div.remove();
+        }
+
+        return true;
     }
 }

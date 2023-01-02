@@ -15,6 +15,9 @@ import {
 import {
     PrepScene
 } from "./scenes/PrepScene.js";
+import {
+    BotScene
+} from "./scenes/BotScene.js";
 
 console.log("Hello");
 
@@ -23,5 +26,6 @@ console.log('battlefield: ', battlefield); */
 
 const game = new Game({
     prep: PrepScene,
+    bot: BotScene,
 });
 game.start("prep");
