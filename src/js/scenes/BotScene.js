@@ -10,7 +10,8 @@ import {
 import {
     getRandomInteger,
     isPointOverElement
-} from "../utils.js"
+} from "../utils.js";
+
 export class BotScene extends Scene {
     playerTurn = true;
     status = null;

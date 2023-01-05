@@ -1,7 +1,7 @@
 /* @tailwind base;
 @tailwind components;
-@tailwind utilities;
- */
+@tailwind utilities; */
+
 
 /**/
 * {
@@ -36,11 +36,6 @@ body {
 	color: gray;
 }
 
-.app-link {
-	text-decoration: none;
-	color: #02025c;
-}
-
 /**/
 
 .battlefield {
@@ -61,7 +56,7 @@ body {
 }
 
 .battlefield__cell-target {
-	background-color: crimson;
+	background-color: rgba(220, 20, 60, 0.479);
 }
 
 /**/
@@ -80,6 +75,9 @@ body {
 .battlefield-status {
 	text-align: center;
 	padding: 20px;
+	font-size: 22px;
+	font-family: "JetBrains Mono", monospace;
+	font-weight: 600;
 }
 
 .marker-row {
@@ -100,6 +98,39 @@ body {
 .app-action {
 	width: 210px;
 	padding: 10px;
+	border-radius: 10px;
+	background-color: #FCFCFD;
+  	border-radius: 4px;
+  	box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,rgba(45, 35, 66, 0.3) 0 7px 13px -3px,#D6D6E7 0 -3px 0 inset;
+  	box-sizing: border-box;
+  	color: #36395A;
+  	cursor: pointer;
+  	display: inline-flex;
+  	font-family: "JetBrains Mono",monospace;
+  	height: 48px;
+  	justify-content: center;
+  	padding-left: 16px;
+  	padding-right: 16px;
+  	position: relative;
+	border-width: 0;
+  	transition: box-shadow .15s,transform .15s;
+  	will-change: box-shadow,transform;
+  	font-size: 18px;
+
+}
+
+.app-action:focus {
+  box-shadow: #D6D6E7 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+}
+
+.app-action:hover {
+  box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+  transform: translateY(-2px);
+}
+
+.app-action:active {
+  box-shadow: #D6D6E7 0 3px 7px inset;
+  transform: translateY(2px);
 }
 
 /***/
@@ -108,8 +139,8 @@ body {
 	top: 0;
 	left: 0;
 	margin: -3px;
-	border: 3px solid #0400ff;
-	background: rgba(0, 55, 255, 0.45);
+	border: 3px solid #040296;
+	background: rgba(3, 43, 185, 0.45);
 	width: 32px;
 	height: 32px;
 }
@@ -144,18 +175,6 @@ body {
 	height: 131px;
 }
 
-.app-actions {
-	height: 100%;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-}
-
-.app-action {
-	width: 210px;
-	padding: 10px;
-}
-
 .shot {
 	width: 32px;
 	height: 32px;
@@ -167,7 +186,7 @@ body {
 }
 
 .shot-miss {
-	color: gray;
+	color: rgb(2, 2, 2);
 }
 
 .shot-hit {
@@ -201,7 +220,7 @@ body {
 
 .shot-kill {
 	margin: -2px;
-	border: 2px solid red;
+	border: 3px solid red;
 }
 
 .hidden {
